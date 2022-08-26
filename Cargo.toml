@@ -3,6 +3,21 @@ name = "crowdstrike-cloudproto"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
+tokio = { version = "1", features = ["io-util"] }
+tokio-util = { version = "0.7.3", features = ["codec"] }
+futures-util = { version = "0.3.23", features = ["sink"] }
+bytes = "1.2.1"
+byteorder = "1.4.3"
+thiserror = "1.0.32"
+tracing = "0.1.36"
+hex = "0.4.3"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["io-util", "macros", "rt-multi-thread"] }
+strum = "0.24.1"
+strum_macros = "0.24.3"
+rand = "0.8.5"
+anyhow = "1.0.62"
+test-log = { version = "0.2.11", features = ["trace"], default-features = false }
+tracing-subscriber = { version = "0.3.15", features = ["env-filter", "fmt"] }
