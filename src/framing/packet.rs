@@ -13,7 +13,6 @@ pub struct CloudProtoPacket {
     /// Each value can have a different interpretation for each backend service
     /// There is no common definition of packet kind at the framing level
     pub kind: u8,
-    /// Used
     pub version: CloudProtoVersion,
     pub payload: Vec<u8>,
 }
@@ -27,7 +26,7 @@ impl CloudProtoPacket {
         let pkt_size = reader.read_u32::<BE>()? as usize - COMMON_HDR_LEN;
         let remaining_size = buf.len() - reader.position() as usize;
         if remaining_size != pkt_size {
-            return Err(CloudProtoError::BadSize(remaining_size, pkt_size));
+            return Err(CloudProtoError::BadFrameSize(remaining_size, pkt_size));
         }
         let payload = buf[reader.position() as usize..].to_vec();
         Ok(Self {

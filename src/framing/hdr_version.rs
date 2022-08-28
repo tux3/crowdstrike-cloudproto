@@ -1,6 +1,7 @@
+use strum_macros::{Display, EnumCount, FromRepr};
+
 #[repr(u16)]
-#[derive(Eq, PartialEq, Copy, Clone, Debug)]
-#[cfg_attr(test, derive(strum_macros::EnumCount))]
+#[derive(Eq, PartialEq, Copy, Clone, Debug, Display, EnumCount, FromRepr)]
 pub enum CloudProtoVersion {
     /// All packets that don't fall in other categories
     Normal,
@@ -33,6 +34,20 @@ impl From<CloudProtoVersion> for u16 {
 impl From<&CloudProtoVersion> for u16 {
     fn from(v: &CloudProtoVersion) -> Self {
         u16::from(*v)
+    }
+}
+
+impl std::fmt::LowerHex for CloudProtoVersion {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let val: u16 = self.into();
+        std::fmt::LowerHex::fmt(&val, f)
+    }
+}
+
+impl std::fmt::UpperHex for CloudProtoVersion {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let val: u16 = self.into();
+        std::fmt::UpperHex::fmt(&val, f)
     }
 }
 

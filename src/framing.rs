@@ -5,24 +5,28 @@
 //! but ignores the inner service-specific payload format and interpretation of packet kinds.
 
 mod hdr_version;
-pub mod packet;
+mod packet;
 mod socket;
 
 pub use hdr_version::CloudProtoVersion;
+pub use packet::CloudProtoPacket;
 pub use socket::CloudProtoSocket;
 
+use crate::services::CloudProtoMagic;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum CloudProtoError {
     #[error("Bad CloudProto magic {0:#x}, expected {1:#x}")]
-    BadMagic(u8, u8),
+    BadMagic(CloudProtoMagic, CloudProtoMagic),
     #[error("Bad CloudProto header version {0:#x}, expected {1:#x}")]
-    BadVersion(u16, u16),
-    #[error("Bad CloudProto payload size {0:#x}, header announced {1:#x}")]
-    BadSize(usize, usize),
-    #[error("Received packet kind {0} as connection reply, expected {1}")]
-    WrongConnectionEstablishedKind(u8, u8),
+    BadVersion(CloudProtoVersion, CloudProtoVersion),
+    #[error("Bad CloudProto payload size {0:#x}, frame header announced {1:#x}")]
+    BadFrameSize(usize, usize),
+    #[error("Received payload size too short, got {0:#x} but wanted at least {1:#x}")]
+    PayloadTooShort(usize, usize),
+    #[error("Received packet kind {0} while connecting, but expected {1}")]
+    WrongConnectionPacketKind(u8, u8),
     #[error("{0}")]
     ClosedByPeer(String),
     #[error("CloudProto IO error")]

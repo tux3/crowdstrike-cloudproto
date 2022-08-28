@@ -11,12 +11,12 @@ bytes = "1.2.1"
 byteorder = "1.4.3"
 thiserror = "1.0.32"
 tracing = "0.1.36"
+strum = "0.24.1"
+strum_macros = "0.24.3"
 hex = "0.4.3"
 
 [dev-dependencies]
 tokio = { version = "1", features = ["io-util", "macros", "rt-multi-thread"] }
-strum = "0.24.1"
-strum_macros = "0.24.3"
 rand = "0.8.5"
 anyhow = "1.0.62"
 test-log = { version = "0.2.11", features = ["trace"], default-features = false }

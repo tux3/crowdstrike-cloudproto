@@ -1,5 +1,10 @@
+mod event;
 mod pkt_kind;
+mod socket;
+
+pub use event::{Event, EventId};
 pub use pkt_kind::TsPacketKind;
+pub use socket::TsEventSocket;
 
 use crate::services::{DEFAULT_BOOTID_HEX, DEFAULT_UNK0_HEX};
 

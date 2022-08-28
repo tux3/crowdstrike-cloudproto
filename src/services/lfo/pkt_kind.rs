@@ -1,7 +1,8 @@
+use strum_macros::{Display, EnumCount, FromRepr};
+
 /// Besides transporting events, the protocol carries different kind of packets internally
 #[repr(u8)]
-#[derive(Eq, PartialEq, Copy, Clone, Debug)]
-#[cfg_attr(test, derive(strum_macros::EnumCount))]
+#[derive(Eq, PartialEq, Copy, Clone, Debug, Display, EnumCount, FromRepr)]
 pub enum LfoPacketKind {
     /// Sent by client to request file data
     GetFileRequest,

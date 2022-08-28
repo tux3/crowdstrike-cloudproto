@@ -1,7 +1,8 @@
+use strum_macros::{Display, EnumCount, FromRepr};
+
 /// Besides transporting events, the TS sub-protocol has handshake packets and an ACK mechanism
 #[repr(u8)]
-#[derive(Eq, PartialEq, Copy, Clone, Debug)]
-#[cfg_attr(test, derive(strum_macros::EnumCount))]
+#[derive(Eq, PartialEq, Copy, Clone, Debug, Display, EnumCount, FromRepr)]
 pub enum TsPacketKind {
     /// First packet from client to server
     Connect,
@@ -10,8 +11,8 @@ pub enum TsPacketKind {
     /// Application data is carried with this packet kind
     /// Usually contains Event messages with a tx id (for ACKs) and other fields depending on the event's Protobuf schema.
     Event,
-    /// CloudProto is normally carried over TLS, but it still has ACKs (seemingly to enforce backpressure).
-    /// Too many event messages sent without waiting for ACKs will be dropped by the other side.
+    /// CloudProto is normally carried over TLS, but can still use an ACK mechanism.
+    /// In practice the official client largely ignores ACKs, and we try to follow its behavior.
     Ack,
     /// This escape hatch is provided with no warranty including fitness for a particular purpose.
     /// Good luck!

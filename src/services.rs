@@ -1,13 +1,12 @@
-mod lfo;
-mod ts;
+pub mod lfo;
+pub mod ts;
 
-pub use lfo::*;
-pub use ts::*;
+use strum_macros::{Display, EnumCount, FromRepr};
 
 /// This CID is **NOT** structurally valid, it would not be accepted by the sensor.
 /// It is also possible to use a structurally valid CID that belongs to no one, but all zeros are accepted by LFO.
 pub const DEFAULT_CID_HEX: &str = "00000000000000000000000000000000";
-/// The AID is a value assigned to clients by TS on connection. It's zero for new agents.
+/// The AID is a value assigned to clients by TS on connection. It is zero for new agents.
 pub const DEFAULT_AID_HEX: &str = "00000000000000000000000000000000";
 /// Arbitrary machine-specific value generated on an isolated VM (from /proc/sys/kernel/random/boot_id)
 pub const DEFAULT_BOOTID_HEX: &str = "6c959680d4945d45924301a720debc88";
@@ -15,8 +14,7 @@ pub const DEFAULT_BOOTID_HEX: &str = "6c959680d4945d45924301a720debc88";
 pub const DEFAULT_UNK0_HEX: &str = "54645dacc392cb43b4803094141e0087";
 
 #[repr(u8)]
-#[derive(Eq, PartialEq, Debug, Copy, Clone)]
-#[cfg_attr(test, derive(strum_macros::EnumCount))]
+#[derive(Eq, PartialEq, Debug, Copy, Clone, Display, EnumCount, FromRepr)]
 pub enum CloudProtoMagic {
     TS,
     LFO,
@@ -58,6 +56,20 @@ impl PartialEq<u8> for CloudProtoMagic {
 impl PartialEq<CloudProtoMagic> for u8 {
     fn eq(&self, other: &CloudProtoMagic) -> bool {
         u8::from(other) == *self
+    }
+}
+
+impl std::fmt::LowerHex for CloudProtoMagic {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let val: u8 = self.into();
+        std::fmt::LowerHex::fmt(&val, f)
+    }
+}
+
+impl std::fmt::UpperHex for CloudProtoMagic {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let val: u8 = self.into();
+        std::fmt::UpperHex::fmt(&val, f)
     }
 }
 
