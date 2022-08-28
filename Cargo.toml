@@ -1,7 +1,13 @@
 [package]
 name = "crowdstrike-cloudproto"
+description = "The binary protocol used between Crowdstrike’s Falcon Sensor and cloud servers"
+repository = "https://github.com/tux3/crowdstrike-cloudproto/"
+categories = ["network-programming", "api-bindings"]
+keywords = ["async", "api", "protocol"]
+license = "MIT OR Apache-2.0"
 version = "0.1.0"
 edition = "2021"
+readme = "README.md"
 
 [dependencies]
 tokio = { version = "1", features = ["io-util"] }
