@@ -32,7 +32,7 @@ enum AgentIdStatus {
 ///
 /// After installation, you can still find your CID in binary form in the "falconstore" file,
 /// saved as a 16 byte binary blob, right after the UTF-16 literal "CU".
-pub struct TsEventSocket<IO> {
+pub struct TsEventSocket<IO: AsyncRead + AsyncWrite> {
     io: CloudProtoSocket<IO>,
     next_txid: u64,
 
@@ -63,7 +63,7 @@ where
         io.send(pkt).await?;
 
         let reply = match io.next().await {
-            Some(pkt) => pkt,
+            Some(pkt) => pkt?,
             None => {
                 return Err(CloudProtoError::ClosedByPeer(
                     "TS server closed connection".into(),
@@ -166,7 +166,7 @@ where
             }
 
             '_receive_packets: loop {
-                let pkt = match this.io.poll_next_unpin(cx) {
+                let pkt = match this.io.poll_next_unpin(cx)? {
                     Poll::Ready(Some(pkt)) => pkt,
                     Poll::Ready(None) => return Poll::Ready(None),
                     Poll::Pending => {

@@ -25,11 +25,9 @@ See the [`TsEventSocket`](services::ts::TsEventSocket) documentation for more in
 
 ### LFO client
 
-> The LFO client is **not published yet**. Coming Soon™.
+The [`LfoClient`](services::lfo::LfoClient) allows you to download updates and other potentially large files used by the sensor.
 
-The `LfoClient` allows you to download updates and other potentially large files used by the sensor.
-
-The client supports LFO chunked downloads and optional XZ compression.  
+The client supports LFO file GET requests with optional XZ compression.  
 There is currently no immediate plan to support uploads.
 
 You do not need to be a Crowdstrike customer to download files from LFO.  

@@ -1,3 +1,5 @@
+//! High-level support for the TS event server
+
 mod event;
 mod pkt_kind;
 mod socket;

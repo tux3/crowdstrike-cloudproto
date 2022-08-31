@@ -1,3 +1,5 @@
+//! High-level socket/client support for the main CloudProto services
+
 pub mod lfo;
 pub mod ts;
 
