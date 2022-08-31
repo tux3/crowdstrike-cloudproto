@@ -10,7 +10,7 @@ mod socket;
 
 pub use hdr_version::CloudProtoVersion;
 pub use packet::CloudProtoPacket;
-pub use socket::CloudProtoSocket;
+pub use socket::{CloudProtoSocket, DEFAULT_MAX_FRAME_LENGTH};
 
 use crate::services::CloudProtoMagic;
 use thiserror::Error;

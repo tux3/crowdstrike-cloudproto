@@ -25,7 +25,7 @@ where
     /// so in practice `IO` should usually be `TlsStream<TcpStream>`.
     ///
     /// The socket buffers individual packets, and has a default maximum packet size of
-    /// `DEFAULT_MAX_FRAME_LENGTH`.
+    /// [`DEFAULT_MAX_FRAME_LENGTH`](DEFAULT_MAX_FRAME_LENGTH).
     /// See [`with_max_frame_length`](Self::with_max_frame_length) to adjust this limit.
     pub fn new(io: IO) -> Self {
         Self::with_max_frame_length(io, DEFAULT_MAX_FRAME_LENGTH)
