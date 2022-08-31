@@ -77,6 +77,7 @@ impl Event {
 pub enum EventId {
     ConfigurationLoaded =           0x308000AA,
     LfoDownloadFromManifestRecord = 0x308000AD,
+    ChannelDownloadComplete =       0x308001D2,
     UNK_SERVER_0x30800207 =         0x30800207, // Sent by server, but no search results in sensor
     CurrentSystemTags =             0x30800208,
     CloudRequestReceived =          0x3080028E,
@@ -85,6 +86,8 @@ pub enum EventId {
     IpAddressAdded =                0x308002e6,
     HostnameChanged =               0x3080034D,
     CurrentUninstallTokenInfo =     0x30800457,
+    ChannelRundown =                0x30800550,
+    ChannelDiffDownload =           0x3080064E,
     DiskCapacity =                  0x3080069f,
     DiskUtilization =               0x30800850,
     UNK_0x31000002 =                0x31000002, // No search results in sensor
