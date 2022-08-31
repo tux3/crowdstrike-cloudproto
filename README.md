@@ -1,3 +1,8 @@
+[![crates.io](https://img.shields.io/crates/v/crowdstrike-cloudproto.svg)](https://crates.io/crates/crowdstrike-cloudproto)
+![Apache 2 licensed](https://img.shields.io/crates/l/crowdstrike-cloudproto)
+![MSRV](https://img.shields.io/badge/MSRV-1.64-informational)
+[![CI](https://github.com/tux3/crowdstrike-cloudproto/workflows/CI/badge.svg)](https://github.com/tux3/crowdstrike-cloudproto/actions?query=workflow%3ACI)
+
 Provides async sockets and high-level objects that implement the protocol
 used between Crowdstrike's Falcon Sensor and the two backend services:
 - The TS event server (event collection, device monitoring, admin remote shell, ...)
