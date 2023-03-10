@@ -30,12 +30,20 @@ impl Event {
         }
     }
 
+    pub fn new_raw(raw_event_id: u32, data: Vec<u8>) -> Self {
+        Self {
+            raw_event_id,
+            event_id: None,
+            data,
+        }
+    }
+
     /// Best effort text representation of the event ID using know [`EventId`][EventId] values
     pub fn ev_id_string(&self) -> String {
         if let Some(id) = self.event_id {
             id.to_string()
         } else {
-            self.raw_event_id.to_string()
+            format!("{:#X}", self.raw_event_id)
         }
     }
 
@@ -101,4 +109,31 @@ pub enum EventId {
     ConnectionStatus =              0x32800139,
     AgentOnline =                   0x338000ac,
     UNK_0x340000ee =                0x340000ee, // No search results in sensor
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use bytes::Buf;
+
+    #[test]
+    fn test_known_id_string() {
+        let ev = Event::new(EventId::AgentOnline, vec![]);
+        assert_eq!(ev.ev_id_string(), "AgentOnline")
+    }
+
+    #[test]
+    fn test_unknown_id_string() {
+        let ev = Event::new_raw(0xAABBCCDD, vec![]);
+        assert_eq!(ev.ev_id_string(), "0xAABBCCDD")
+    }
+
+    #[test]
+    fn test_event_serde_rountrip() {
+        let ev = Event::new_raw(0xAABBCCDD, vec![]);
+        let mut buf = Vec::new();
+        ev.clone().into_write(&mut buf).unwrap();
+        let ev2 = Event::from_read(&mut buf.reader()).unwrap();
+        assert_eq!(ev, ev2);
+    }
 }
