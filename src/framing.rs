@@ -25,6 +25,8 @@ pub enum CloudProtoError {
     BadFrameSize(usize, usize),
     #[error("Received payload size too short, got {0:#x} but wanted at least {1:#x}")]
     PayloadTooShort(usize, usize),
+    #[error("Received payload with invalid size, got {0:#x} but expected {1:#x}")]
+    PayloadInvalidSize(usize, usize),
     #[error("Received packet kind {0} while connecting, but expected {1}")]
     WrongConnectionPacketKind(u8, u8),
     #[error("{0}")]

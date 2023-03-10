@@ -1,6 +1,6 @@
 use crate::framing::{CloudProtoError, CloudProtoPacket, CloudProtoSocket, CloudProtoVersion};
 use crate::services::ts::event::EVT_HDR_LEN;
-use crate::services::ts::{Event, TsConnectInfo, TsPacketKind};
+use crate::services::ts::{AgentIdStatus, Event, TsConnectInfo, TsPacketKind};
 use crate::services::CloudProtoMagic;
 use futures_util::{Sink, SinkExt, Stream, StreamExt};
 use std::io::Cursor;
@@ -14,12 +14,6 @@ const HDR_TXID_SIZE: usize = std::mem::size_of::<u64>();
 // The TS server returns large quickly incrementing TXIDs, but these values here are fine.
 const FIRST_TXID: u64 = 0x200;
 const TXID_INCREMENT: u64 = 0x100;
-
-#[repr(u8)]
-enum AgentIdStatus {
-    Unchanged = 0x1,
-    Changed = 0x2,
-}
 
 /// Async socket used to stream [`Event`](Event)s with the TS service
 ///
@@ -44,6 +38,15 @@ impl<IO> TsEventSocket<IO>
 where
     IO: AsyncRead + AsyncWrite,
 {
+    pub(crate) fn new(io: CloudProtoSocket<IO>) -> Self {
+        Self {
+            io,
+            next_txid: FIRST_TXID,
+            unacked_txid: None,
+            unacked_event: None,
+        }
+    }
+
     pub async fn connect(
         mut io: CloudProtoSocket<IO>,
         info: TsConnectInfo,
@@ -124,12 +127,7 @@ where
             )
         }
 
-        Ok(Self {
-            io,
-            next_txid: FIRST_TXID,
-            unacked_txid: None,
-            unacked_event: None,
-        })
+        Ok(Self::new(io))
     }
 }
 
