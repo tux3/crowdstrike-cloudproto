@@ -72,7 +72,7 @@ impl LfoResponse {
     #[cfg(feature = "lfo-check-hash")]
     fn update_running_hash(hasher: &mut sha2::Sha256, buf: &[u8]) {
         use sha2::Digest;
-        hasher.update(&buf);
+        hasher.update(buf);
     }
     #[cfg(not(feature = "lfo-check-hash"))]
     fn update_running_hash(_hasher: &mut (), _buf: &[u8]) {}
@@ -98,7 +98,7 @@ impl LfoResponse {
     fn validate_full_data_hash(&self, data: &[u8]) -> Result<(), LfoError> {
         use sha2::Digest;
         let mut hasher = sha2::Sha256::new();
-        hasher.update(&data);
+        hasher.update(data);
         Self::check_hash_matches(&self.header.data_hash, &mut hasher)
     }
     #[cfg(not(feature = "lfo-check-hash"))]
@@ -264,7 +264,7 @@ mod test {
         // We should already check the hash by default, but let's do it again for good measure
         assert_eq!(
             expected_hash,
-            &hex::encode(&resp.lfo_file_header().data_hash)
+            &hex::encode(resp.lfo_file_header().data_hash)
         );
         Ok(())
     }
