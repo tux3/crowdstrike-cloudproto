@@ -83,32 +83,47 @@ impl Event {
 #[allow(dead_code)]
 #[non_exhaustive]
 pub enum EventId {
-    ConfigurationLoaded =           0x308000AA,
-    LfoDownloadFromManifestRecord = 0x308000AD,
-    ChannelDownloadComplete =       0x308001D2,
-    UNK_SERVER_0x30800207 =         0x30800207, // Sent by server, but no search results in sensor
-    CurrentSystemTags =             0x30800208,
-    CloudRequestReceived =          0x3080028E,
-    UNK_0x30800296 =                0x30800296, // No search results in sensor
-    IpAddressAddedForFamily2 =      0x308002e5, // I think this is IPv4, and the other IPv6?
-    IpAddressAdded =                0x308002e6,
-    HostnameChanged =               0x3080034D,
-    CurrentUninstallTokenInfo =     0x30800457,
-    ChannelRundown =                0x30800550,
-    ChannelDiffDownload =           0x3080064E,
-    DiskCapacity =                  0x3080069f,
-    DiskUtilization =               0x30800850,
-    UNK_0x31000002 =                0x31000002, // No search results in sensor
-    ChannelVersionRequired =        0x310001D1,
-    UNK_0x3100053f =                0x3100053f, // No search results in sensor
-    SystemCapacity =                0x310005AB,
-    UpdateCloudEvent =              0x318002B1,
-    OsVersionInfo =                 0x3200014e,
-    UNK_0x32000220 =                0x32000220, // No search results in sensor
-    UNK_0x320002cf =                0x320002cf, // No search results in sensor
-    ConnectionStatus =              0x32800139,
-    AgentOnline =                   0x338000ac,
-    UNK_0x340000ee =                0x340000ee, // No search results in sensor
+    UNK_CLIENT_0x310000EF =             0x310000EF,
+    ConfigurationLoaded =               0x308000AA,
+    LfoDownloadFromManifestRecord =     0x308000AD,
+    ChannelDownloadComplete =           0x308001D2,
+    UNK_SERVER_0x30800207 =             0x30800207, // Sent by server, but no search results in sensor
+    CurrentSystemTags =                 0x30800208,
+    UNK_RunningProcessInfo =            0x3080020D, // Not found by search, but data clearly lists a running process w/ cmdline and attributes
+    CloudRequestReceived =              0x3080028E,
+    UNK_0x30800296 =                    0x30800296, // No search results in sensor
+    KernelModuleSyntheticLoadImage =    0x308002A2, // A loaded kernel module name and its dependencies, as in lsmod output
+    VarRunUtmpUsers1 =                  0x308002DC,
+    VarRunUtmpUsers2 =                  0x308002DD,
+    IpAddressAddedForFamily2 =          0x308002E5, // I think this is IPv4, and the other IPv6?
+    IpAddressAdded =                    0x308002E6,
+    NetworkNeighborList1 =              0x308002F1,
+    HostnameChanged =                   0x3080034D,
+    UNK_0x3080037C =                    0x3080037C, // No search result
+    CurrentUninstallTokenInfo =         0x30800457,
+    ChannelRundown =                    0x30800550,
+    ChannelDiffDownload =               0x3080064E,
+    ResourceUtilization =               0x30800682,
+    DiskCapacity =                      0x3080069F,
+    DiskUtilization =                   0x30800850,
+    UNK_0x31000002 =                    0x31000002, // No search results in sensor
+    ChannelVersionRequired =            0x310001D1,
+    UNK_0x3100053f =                    0x3100053F, // No search results in sensor
+    SystemCapacity =                    0x310005AB,
+    UpdateCloudEvent =                  0x318002B1,
+    IpAddressAddedForFamily2_318 =      0x318002E5,
+    IpAddressAdded_318 =                0x318002E6,
+    UNK_ProcessInfo_0x318004BB =        0x318004BB, // Contains the cmdline of a process, unidentified purpose
+    OsVersionInfo =                     0x3200014E,
+    UNK_0x32000220 =                    0x32000220, // No search results in sensor
+    UNK_0x320002cf =                    0x320002CF, // No search results in sensor
+    IpAddressAddedForFamily2_320 =      0x320002E5,
+    IpAddressAdded_320 =                0x320002E6,
+    IndicateConnectionStatus328 =       0x32800139,
+    OsVersionInfo328 =                  0x3280014E,
+    IndicateConnectionStatus330 =       0x33000139,
+    AgentOnline =                       0x338000AC,
+    UNK_ProcessInfo_0x340000ee =        0x340000EE, // No search results. Contains a cmdline that was run with some proces info
 }
 
 #[cfg(test)]
